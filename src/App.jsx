@@ -17,11 +17,23 @@ const App = () => {
 
     const fetchMovies = async () => {
         try {
+          const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
+          const response = await fetch(endpoint, API_OPTIONS)
+
+          if(!response.ok){
+            throw new Error('Failed to fetch movies')
+          }
+
+          const data = await response.json
+
+          console.log(data)
         } catch (error) {
             console.log(`Error fetching movies: ${error}`);
             setErrorMessage('Error finding Movies. Try again later.')
         }
     };
+
+    fetchMovies()
 
     return (
         <>
@@ -40,7 +52,7 @@ const App = () => {
                 <section className="all-movies">
                   <h2>All Movies</h2>
 
-                  {errorMessage && <p className=" text-red-500">{errorMessage}</p> }
+                  { errorMessage && <p className=" text-red-500">{errorMessage}</p> }
                 </section>
 
             </div>
